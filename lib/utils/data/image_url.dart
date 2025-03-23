@@ -1,0 +1,1 @@
+const String authHeaderImage = 'images/assets/splashScreeen.jpg';
