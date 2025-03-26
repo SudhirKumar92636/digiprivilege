@@ -31,7 +31,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
 
   void _openCheckout() {
     var options = {
-      'key': 'rzp_test_0lyEjG6O21faf0',
+      'key': 'rzp_test_VGLEqLlosyRIg3',
       'amount': 1000,
       'name': 'Demo App',
       'description': 'Payment for Testing',

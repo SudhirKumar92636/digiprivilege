@@ -259,6 +259,7 @@ class _GoogleAuthScreensState extends State<GoogleAuthScreens> {
   final phoneController = TextEditingController();
   bool enableButton = false;
   bool isLoading = false;
+  SigningController signingController = Get.put(SigningController());
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +284,7 @@ class _GoogleAuthScreensState extends State<GoogleAuthScreens> {
                   maxLength: 10,
                   onChange: (text) {
                     setState(() {
-                      enableButton = text!.length == 10;
+                      enableButton = (text?.length ?? 0) == 10;
                     });
                     return null;
                   }).paddingSymmetric(horizontal: 16),
@@ -297,10 +298,7 @@ class _GoogleAuthScreensState extends State<GoogleAuthScreens> {
                   onPressed: () async {
                     setState(() => isLoading = true);
                     await SigningController().signInWithGoogle();
-                    var uid = FirebaseAuth.instance.currentUser?.uid;
-                    if (uid != null) {
-                      await validateOTP(phoneController.text.trim());
-                    }
+
                     setState(() => isLoading = false);
                   },
                 ).paddingSymmetric(horizontal: 16),
@@ -310,69 +308,71 @@ class _GoogleAuthScreensState extends State<GoogleAuthScreens> {
         ));
   }
 
-  Future<void> validateOTP(String phone) async {
-    try {
-      var auth = FirebaseAuth.instance;
-      var requestBody = {'phone': phone};
-      var authToken = await auth.currentUser?.getIdToken(true);
-      final request = await PushNotification().httpClient.postUrl(
-          Uri.parse(PushNotification().baseUrl + "isuser"));
-      request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
-      request.headers.set(HttpHeaders.authorizationHeader, "$authToken");
-      request.add(utf8.encode(json.encode(requestBody)));
 
-      final response = await request.close();
-      response.transform(utf8.decoder).listen((contents) async {
-        var jsonRes = json.decode(contents);
-        var doc = jsonRes['data'];
-        int status = jsonRes['status'];
-        var docId = jsonRes['id'];
+  // Future<void> validateOTP(String phone) async {
+  //   try {
+  //     var auth = FirebaseAuth.instance;
+  //     var requestBody = {'phone': phone};
+  //     var authToken = await auth.currentUser?.getIdToken(true);
+  //     final request = await PushNotification().httpClient.postUrl(
+  //         Uri.parse(PushNotification().baseUrl + "isuser"));
+  //     request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+  //     request.headers.set(HttpHeaders.authorizationHeader, "$authToken");
+  //     request.add(utf8.encode(json.encode(requestBody)));
+  //
+  //     final response = await request.close();
+  //     response.transform(utf8.decoder).listen((contents) async {
+  //       var jsonRes = json.decode(contents);
+  //       var doc = jsonRes['data'];
+  //       int status = jsonRes['status'];
+  //       var docId = jsonRes['id'];
+  //
+  //       if (docId != null && docId.isNotEmpty) {
+  //         bool isUser = doc['user'];
+  //         bool agent = doc['agent'];
+  //
+  //         if (agent && auth.currentUser != null) {
+  //           AuthService().getUserDetails(auth.currentUser!.uid).then((_) {
+  //             goLandingPage();
+  //           });
+  //         } else if (isUser && auth.currentUser != null) {
+  //           if (docId != auth.currentUser?.uid) {
+  //             AuthService().updateUserDocOfAgent(context, auth.currentUser?.uid ?? "", docId);
+  //             UserMembershipService().getAllUserMembershipByNumber(phoneController.text.toString())
+  //                 .then((value) => {
+  //               if (value != null)
+  //                 {
+  //                   for (var element in value)
+  //                     {
+  //                       if (element.userId != auth.currentUser?.uid)
+  //                         {
+  //                           UserMembershipService()
+  //                               .updateUidOfMembership(auth.currentUser?.uid ?? "", element.id ?? "")
+  //                         }
+  //                     }
+  //                 }
+  //             });
+  //           }
+  //           AuthService().getUserDetails(auth.currentUser!.uid).then((_) {
+  //             setState(() => isLoading = false);
+  //             goLandingPage();
+  //           });
+  //         }
+  //       } else if (status == 200) {
+  //         setState(() => isLoading = false);
+  //         Logger().i("false");
+  //         newUserPage();
+  //       }
+  //     });
+  //   } catch (e) {
+  //     setState(() => isLoading = false);
+  //     Fluttertoast.showToast(msg: "Please enter a valid OTP");
+  //     Logger().i("pin verification $e");
+  //     FocusScope.of(context).unfocus();
+  //   }
+  // }
 
-        if (docId != null && docId.isNotEmpty) {
-          bool isUser = doc['user'];
-          bool agent = doc['agent'];
 
-          if (agent && auth.currentUser != null) {
-            AuthService().getUserDetails(auth.currentUser!.uid).then((_) {
-              goLandingPage();
-            });
-          } else if (isUser && auth.currentUser != null) {
-            if (docId != auth.currentUser?.uid) {
-              AuthService().updateUserDocOfAgent(context, auth.currentUser?.uid ?? "", docId);
-              UserMembershipService()
-                  .getAllUserMembershipByNumber(phoneController.text)
-                  .then((value) => {
-                if (value != null)
-                  {
-                    for (var element in value)
-                      {
-                        if (element.userId != auth.currentUser?.uid)
-                          {
-                            UserMembershipService()
-                                .updateUidOfMembership(auth.currentUser?.uid ?? "", element.id ?? "")
-                          }
-                      }
-                  }
-              });
-            }
-            AuthService().getUserDetails(auth.currentUser!.uid).then((_) {
-              setState(() => isLoading = false);
-              goLandingPage();
-            });
-          }
-        } else if (status == 200) {
-          setState(() => isLoading = false);
-          Logger().i("false");
-          newUserPage();
-        }
-      });
-    } catch (e) {
-      setState(() => isLoading = false);
-      Fluttertoast.showToast(msg: "Please enter a valid OTP");
-      Logger().i("pin verification $e");
-      FocusScope.of(context).unfocus();
-    }
-  }
 
   void goLandingPage() async {
     await AppData.setBoolean(loginStatus, true);

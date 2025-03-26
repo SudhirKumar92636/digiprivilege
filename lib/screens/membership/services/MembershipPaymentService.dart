@@ -20,21 +20,32 @@ class MembershipPaymentService {
   Future<void> addUserMembershipData(
       UserMembershipDetailsModel data, String docId) async {
     var jsonData = userMembershipDetailsModelToJson(data);
-    return await storeInstance
-        .collection('razorpay_memberships')
-        .doc(docId)
-        .set(jsonData);
+
+    print("chek jsjsjs ::: ${jsonData}");
+    try{
+      return await storeInstance
+          .collection('razorpay_memberships')
+          .doc(docId)
+          .set(jsonData);
+    }catch(e){
+      print("some thing went wrong ::: $e");
+    }
   }
 
   Future<void> addUserMembershipBrandData(
       HotelModal data, String docId, String brandDoc) async {
     var jsonData = hotelModelToJson(data);
-    return await storeInstance
-        .collection('razorpay_memberships')
-        .doc(docId)
-        .collection("brands")
-        .doc(brandDoc)
-        .set(jsonData);
+
+     try{
+       return await storeInstance
+           .collection('razorpay_memberships')
+           .doc(docId.toString())
+           .collection("brands")
+           .doc(brandDoc.toString())
+           .set(jsonData);
+     }catch(e){
+       print("some things went wrong :: $e");
+     }
   }
 
   Future<void> updateFcmTokenStatus(String userId, String token) async {

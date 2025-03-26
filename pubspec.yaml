@@ -72,6 +72,7 @@ dependencies:
   google_auth: ^0.0.3
   rename: ^3.0.2
   webview_flutter: ^2.8.0
+  ulid: ^2.0.1
 
 dev_dependencies:
   flutter_test:

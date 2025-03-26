@@ -8,86 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:436573396589:android:f20f696da3bacfc8916964",
-        "android_client_info": {
-          "package_name": "com.communication.talktogether"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "436573396589-m8pvhbl7kej3ejda93nrtg70fr2vukd7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.communication.talktogether",
-            "certificate_hash": "5a79b7198a2fa3a6b066759b6684d152b4635470"
-          }
-        },
-        {
-          "client_id": "436573396589-7f5idg860hn2e5cprs1sdbc3b00vmkpc.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA5rzvIClgP9SAFQXZjWm-wvgJ9IhxxeqY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "436573396589-7f5idg860hn2e5cprs1sdbc3b00vmkpc.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "436573396589-19d0llmdij4ghr2ikabf78t0jbknp6sr.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.membership"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:436573396589:android:3bb9eccf7ec59ea8916964",
-        "android_client_info": {
-          "package_name": "com.example.block_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "436573396589-7f5idg860hn2e5cprs1sdbc3b00vmkpc.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA5rzvIClgP9SAFQXZjWm-wvgJ9IhxxeqY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "436573396589-7f5idg860hn2e5cprs1sdbc3b00vmkpc.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "436573396589-19d0llmdij4ghr2ikabf78t0jbknp6sr.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.membership"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:436573396589:android:152a0ca9530d109e916964",
         "android_client_info": {
           "package_name": "com.example.membership"
@@ -95,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "436573396589-f1st7ld8onnge3a7itgobesscnlc26rs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.membership",
+            "certificate_hash": "a362979913e855d7b23a9187879e8f03988096dc"
+          }
+        },
+        {
           "client_id": "436573396589-7f5idg860hn2e5cprs1sdbc3b00vmkpc.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -124,20 +52,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:436573396589:android:243584aef7a43126916964",
+        "mobilesdk_app_id": "1:436573396589:android:38dba2f31743d4ad916964",
         "android_client_info": {
-          "package_name": "com.example.mvvmauth"
+          "package_name": "com.example.new_membership_project"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "436573396589-qdji06o88j6etoab3glk5obrdivlbfcb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.mvvmauth",
-            "certificate_hash": "201dcf3c764dd74fe2f391cc246a4d2a09d37731"
-          }
-        },
         {
           "client_id": "436573396589-7f5idg860hn2e5cprs1sdbc3b00vmkpc.apps.googleusercontent.com",
           "client_type": 3

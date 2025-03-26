@@ -73,7 +73,7 @@ class _MembershipPaymentScreenState extends State<MembershipPaymentScreen> {
     request.headers
         .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     String basicAuth = 'Basic ${base64Encode(utf8.encode(
-            '${'rzp_test_ROMPOMqAyx4oCV'}:${'ehNnvCh86xaWw9UIjkbpJLIn'}'))}';
+            '${'rzp_test_VGLEqLlosyRIg3'}:${'mKBa1xPDGaMAVdtBBHBnn82h'}'))}';
     request.headers.set(HttpHeaders.authorizationHeader, basicAuth);
     request.add(utf8.encode(json.encode(orderOptions)));
     final response = await request.close();
@@ -81,20 +81,27 @@ class _MembershipPaymentScreenState extends State<MembershipPaymentScreen> {
       String orderId = contents.split(',')[0].split(":")[1];
       orderId = orderId.substring(1, orderId.length - 1);
 
-        Map<String, dynamic> checkoutOptions = {
-          'user_id': userId,
-          'key': 'rzp_test_ROMPOMqAyx4oCV',
-          'amount': (membershipDetailsData.price ?? 0) * 100,
-          'name': userName,
-          'order_id': orderId,
-          'theme': "#000000",
-          'description': 'Payment for membership',
-          'prefill': {'contact': userNumber, 'email': userEmail},
-          'external': {
-            'wallets': ['paytm']
-          }
-        };
-        try {
+      Map<String, dynamic> checkoutOptions = {
+         'user_id': userId,
+        'key': 'rzp_test_VGLEqLlosyRIg3',
+        'amount': ((membershipDetailsData.price ?? 0) * 100).toInt(),
+        'name': userName ?? 'User',
+         'order_id': (orderId??"0").toInt(),
+        'theme': {'color': "#000000"},
+        'description': 'Payment for membership',
+        'prefill': {
+          'contact': userNumber,
+          'email': (userEmail ?? 'test@example.com').toString()
+        },
+        'external': {
+          'wallets': ['paytm']
+        }
+      };
+
+
+
+
+      try {
           MembershipPaymentService()
               .addUserMembershipData(
               UserMembershipDetailsModel(
@@ -124,17 +131,19 @@ class _MembershipPaymentScreenState extends State<MembershipPaymentScreen> {
                   isFoodWithoutStay:
                   membershipDetailsData.is_food_without_stay),
               id)
-              .then((value) {
+              .then((preValue) {
             MembershipService()
                 .getAllHotel(userId, widget.membershipDetailsData.id ?? "")
-                .then((value) => {
-              for (var element = 0; element < value.length; ++element){
-                  MembershipPaymentService().addUserMembershipBrandData(value[element], id, "user_bra_${generateRandomString(10)}")
+                .then((inValue) => {
+
+              for (var element = 0; element < inValue.length; ++element){
+                  MembershipPaymentService().addUserMembershipBrandData(inValue[element], id, "user_bra_${generateRandomString(10)}")
                 }
             });
           });
           _razorpay.open(checkoutOptions);
         } catch (e) {
+          print("Error show:---${e.toString()}");
           Fluttertoast.showToast(msg: "Something went wrong");
         }
       // });

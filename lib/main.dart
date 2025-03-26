@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:membership/screens/auth/google_auth/google_auth_screen.dart';
 import 'package:membership/screens/auth/phoneauth/phone_auth_screen.dart';
 import 'package:membership/screens/razorypay/razory_pay.dart';
@@ -17,6 +18,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: "urlife-6b1cc",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
@@ -31,9 +33,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
         builder: (context , orientation , SizerUtil) {
-          return  MaterialApp(
+          return  GetMaterialApp(
             debugShowCheckedModeBanner: false,
-              home: const SplashScreen(),
+              home: const GoogleAuthScreens(),
            // home: const RazorpayScreen(),
            //home: GogleAuthScreens(),
             theme: appTheme(),

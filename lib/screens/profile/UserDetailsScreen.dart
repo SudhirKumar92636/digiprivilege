@@ -45,6 +45,23 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   final _otherReferralCode = TextEditingController();
   final _addressController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+
+    var auth = FirebaseAuth.instance.currentUser;
+    _emailController.text = auth?.email??"";
+    if(auth !=null){
+      var name = auth.displayName?.split(" ");
+      if(name !=null && name.length > 1){
+        _firstnameController.text = name[0];
+        _lastNameController.text = name[1];
+      }else{
+        _firstnameController.text = auth.displayName ?? "";
+      }
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,37 +165,41 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 :ElevatedButton(
                 style: elevatedButtonStyle(6.5.h, 90.w),
                 onPressed: () async {
+
                   if(formkey.currentState!.validate()) {
-                    setState((){
+                    setState(() {
                       isLoading = true;
                     });
-                    var requestBody = {
-                    'referral_code': _otherReferralCode.text.toString(),
-                   };
-                    var authToken = await FirebaseAuth.instance.currentUser?.getIdToken(true);
 
-                    final request = await PushNotification().httpClient.postUrl(
-                        Uri.parse(PushNotification().baseUrl + "isvalidcode"));
-                    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
-                    request.headers.set(HttpHeaders.authorizationHeader, "$authToken");
-                    request.add(utf8.encode(json.encode(requestBody)));
-
-                    final response = await request.close();
-
-                    response.transform(utf8.decoder).listen((contents) async {
-                      var jsonRes = json.decode(contents);
-                      var message = jsonRes['message'];
-                      if (message == "valid") {
-                        addUserData(jsonRes['id']);
-                      } else {
-
-                        setState((){
-                          isLoading = false;
-                        });
-                        Fluttertoast.showToast(msg: "Invalid referral code");
-                      }
-                    });
+                    addUserData("");
                   }
+                   //  var requestBody = {
+                   //  'referral_code': _otherReferralCode.text.toString(),
+                   // };
+                  //   var authToken = await FirebaseAuth.instance.currentUser?.getIdToken(true);
+                  //
+                  //   final request = await PushNotification().httpClient.postUrl(
+                  //       Uri.parse(PushNotification().baseUrl + "isvalidcode"));
+                  //   request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+                  //   request.headers.set(HttpHeaders.authorizationHeader, "$authToken");
+                  //   request.add(utf8.encode(json.encode(requestBody)));
+                  //
+                  //   final response = await request.close();
+                  //
+                  //   response.transform(utf8.decoder).listen((contents) async {
+                  //     var jsonRes = json.decode(contents);
+                  //     var message = jsonRes['message'];
+                  //     if (message == "valid") {
+                  //       addUserData(jsonRes['id']);
+                  //     } else {
+                  //
+                  //       setState((){
+                  //         isLoading = false;
+                  //       });
+                  //       Fluttertoast.showToast(msg: "Invalid referral code");
+                  //     }
+                  //   });
+                  // }
                 },
                 child: Text(
                   "Save Profile",
