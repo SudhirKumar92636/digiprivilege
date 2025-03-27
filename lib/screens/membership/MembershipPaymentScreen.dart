@@ -73,20 +73,23 @@ class _MembershipPaymentScreenState extends State<MembershipPaymentScreen> {
     request.headers
         .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     String basicAuth = 'Basic ${base64Encode(utf8.encode(
-            '${'rzp_test_VGLEqLlosyRIg3'}:${'mKBa1xPDGaMAVdtBBHBnn82h'}'))}';
+            '${'rzp_test_xmVcR5W2iSuWYW'}:${'ClfWdGvLdVzkSy9Mjk55VhUx'}'))}';
     request.headers.set(HttpHeaders.authorizationHeader, basicAuth);
     request.add(utf8.encode(json.encode(orderOptions)));
     final response = await request.close();
     response.transform(utf8.decoder).listen((contents) {
+      var contents1 = json.decode(contents);
+      print("Order api called ${contents1["id"]}");
+      print(contents);
       String orderId = contents.split(',')[0].split(":")[1];
       orderId = orderId.substring(1, orderId.length - 1);
 
       Map<String, dynamic> checkoutOptions = {
          'user_id': userId,
-        'key': 'rzp_test_VGLEqLlosyRIg3',
+        'key': 'rzp_test_xmVcR5W2iSuWYW',
         'amount': ((membershipDetailsData.price ?? 0) * 100).toInt(),
         'name': userName ?? 'User',
-         'order_id': (orderId??"0").toInt(),
+         'order_id': "${contents1["id"]}",
         'theme': {'color': "#000000"},
         'description': 'Payment for membership',
         'prefill': {
@@ -97,9 +100,6 @@ class _MembershipPaymentScreenState extends State<MembershipPaymentScreen> {
           'wallets': ['paytm']
         }
       };
-
-
-
 
       try {
           MembershipPaymentService()
