@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:membership/screens/auth/phone/screens/TestRuls.dart';
 import 'package:membership/utils/data/data_storage.dart';
-
 import '../utils/data/image_url.dart';
 import 'auth/phone/components/PhoneAuthComponents.dart';
 import 'auth/phone/screens/PhoneAuthScreen.dart';
