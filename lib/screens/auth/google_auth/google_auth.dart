@@ -46,13 +46,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../landing_page.dart';
 import '../../profile/UserDetailsScreen.dart';
 
 class SigningController extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  RxBool isLoading = false.obs; // Loading state
+  RxBool isLoading = false.obs;
 
   Future<void> signInWithGoogle() async {
     isLoading.value = true;
@@ -63,10 +62,8 @@ class SigningController extends GetxController {
         Get.snackbar("Sign-in", "Sign-in cancelled.");
         return;
       }
-
       final GoogleSignInAuthentication googleSignInAuth =
       await googleUserAccount.authentication;
-
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuth.accessToken,
         idToken: googleSignInAuth.idToken,
@@ -93,9 +90,8 @@ class SigningController extends GetxController {
   Future<void> checkUserExists(String email) async {
     try {
       var userDoc = await FirebaseFirestore.instance
-          .collection('users') // Ensure this collection matches your Firestore setup
-          .where('email', isEqualTo: email)
-          .get();
+          .collection('users')
+          .where('email', isEqualTo: email).get();
 
       if (userDoc.docs.isEmpty) {
         newUserPage();
@@ -111,7 +107,7 @@ class SigningController extends GetxController {
   }
 
   void goLandingPage() {
-    Get.offAll(() => LandingPage()); // GetX navigation
+    Get.offAll(() => const LandingPage());
   }
 
   void newUserPage() {

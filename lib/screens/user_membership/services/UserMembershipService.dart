@@ -11,7 +11,7 @@ class UserMembershipService {
       String userId, String status) {
     var db = FirebaseFirestore.instance.collection('user_memberships');
     var condition = db
-        .where('user_id', isEqualTo: userId)
+        .where('user_id', isEqualTo: userId )
         .where('membership_status', isEqualTo: status)
         .snapshots();
     var data = condition.map((snapshot) => snapshot.docs

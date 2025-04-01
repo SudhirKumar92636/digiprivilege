@@ -66,8 +66,6 @@ class _GoogleAuthScreensState extends State<GoogleAuthScreens> {
                   ),
                 ),
               )
-
-
             ],
           ),
         ));
