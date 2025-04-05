@@ -20,6 +20,34 @@ class UserMembershipService {
     return data;
   }
 
+
+  // Stream<List<UserMembershipDetailsModel>> getExpiredUserMemberships(String userId) {
+  //   var db = FirebaseFirestore.instance.collection('user_memberships');
+  //
+  //   return db.where('user_id', isEqualTo: userId).snapshots().map((snapshot) {
+  //     var now = DateTime.now();
+  //
+  //     return snapshot.docs
+  //         .map((e) {
+  //       var data = e.data();
+  //       var membership = UserMembershipDetailsModel.fromJson(data);
+  //
+  //       DateTime expiryDate = DateTime.parse(membership.purchaseAt!.toDate().toString());
+  //
+  //       if (expiryDate.isBefore(now)) {
+  //         membership.membershipStatus = "expired";
+  //       } else {
+  //         membership.membershipStatus = "active";
+  //       }
+  //
+  //       return membership;
+  //     })
+  //         .where((m) => m.membershipStatus == "expired") // Sirf expired members ko return karo
+  //         .toList();
+  //   });
+  // }
+
+
   Future<List<UserMembershipDetailsModel>?> getAllUserMembershipByNumber (
       String phone) async {
     var db = FirebaseFirestore.instance.collection('user_memberships');

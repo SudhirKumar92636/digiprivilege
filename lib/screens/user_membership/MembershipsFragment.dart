@@ -50,7 +50,7 @@ class _MembershipsFragmentState extends State<MembershipsFragment>
       length: 2,
       child: ListView(
         //mainAxisSize: MainAxisSize.min,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           Container(
             margin: const EdgeInsets.only(top: 10),
@@ -95,7 +95,6 @@ class _MembershipsFragmentState extends State<MembershipsFragment>
                       ),
                     ),
                   ),
-
                 ]),
           ),
           SizedBox(
